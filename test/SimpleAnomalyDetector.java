@@ -7,9 +7,26 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
 
 	private List<CorrelatedFeatures> normalModel = new ArrayList<CorrelatedFeatures>();
 
+	private float minCorrelation;
+
+	public SimpleAnomalyDetector(float minCorrelation) {
+		this.minCorrelation = minCorrelation;
+	}
+
+	public SimpleAnomalyDetector() {
+		this.minCorrelation = (float) 0.9;
+	}
+
+	public float getMinCorrelation() {
+		return this.minCorrelation;
+	}
+
+	public void setMinCorrelation(float minCorrelation) {
+		this.minCorrelation = minCorrelation;
+	}
+
 	@Override
 	public void learnNormal(TimeSeries ts) {
-		float minCorrelation = (float) 0.9;
 		for (int i = 0; i < ts.getNumOfColumns() - 1; i++) {
 			float maxCorrelation = 0;
 			int maxCorrelationIndex = -1;
@@ -70,4 +87,5 @@ public class SimpleAnomalyDetector implements TimeSeriesAnomalyDetector {
 	public List<CorrelatedFeatures> getNormalModel() {
 		return this.normalModel;
 	}
+
 }
