@@ -43,6 +43,6 @@ public class CLI {
 				commands.get((int) commandNum - 1).execute();
 			}
 		}
-
+		this.dio.write("bye");
 	}
 }
