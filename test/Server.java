@@ -22,10 +22,15 @@ public class Server {
 	private void startServer(int port, ClientHandler ch) {
 		try {
 			ServerSocket server = new ServerSocket(port);
+			server.setSoTimeout(1000);
 			while (!stop) {
-				Socket aClient = server.accept();
-				ch.handleClient(aClient.getInputStream(), aClient.getOutputStream());
-				aClient.close();
+				try {
+					Socket aClient = server.accept();
+					ch.handleClient(aClient.getInputStream(), aClient.getOutputStream());
+					aClient.close();
+				} catch (SocketTimeoutException e) {
+
+				}
 			}
 			server.close();
 		} catch (IOException e) {
